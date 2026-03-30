@@ -1,28 +1,54 @@
+<!-- HTML is made up of elements -->
+
 <!DOCTYPE html>
 <html>
+<!--ELEMENTS are just boxes that we place content in-->
+<!--ELEMENTS are made up of tags and attributes-->
+<!--TAGS look like <sometag> CONTENT </sometag> -->
+
+<!-- overall structure of HTML elements are:  <sometag>CONTENT FOR THAT ELEMENT</sometag> -->
+
+<!--attributes are descriptors of elements that provide more context or provide customization to an element-->
+
 <head>
-  <title>POKEMON (BUT NOT REALLY) THE GAME</title>
+    <!--HEAD element provides metadata-->
+
+    <title>My first page!</title>
+
 </head>
-<body style="background-color: darkcyan; color: white; font-family: monospace;">
 
-<!--H1 through H6 are Section Titles-->
-<h1 style="color: white; text-align: center; font-family: monospace;">POKEMON (BUT NOT REALLY) THE GAME</h1>
-<!--IMG element renders an image-->
+<body> <!--the body renders everything that we see in the viewport OR we interact with-->
 
-  <!--IMG element renders an image-->
-  <img src="./assets/Pallet_Town_PE.png" aria-label="an image of pallet town from pokemon" style="width: 100%"></img>
+    <!--the style attribute styles an element-->
 
-  <!--LISTS: ordered list (where the steps count; 1,2,3,4) and unordered lists (lists where order doesn't matter; *, *, * )-->
-<button class="start-button" style="width: 100%"><h1 style="text-align: center;"><a href="./game.html">START</a></h1></button>
+    <h1>Hi there! </h1>
+    <p style="background-color: beige; font-size: 48px;">
+        Lorem ipsum dolor i wanna be the very best earth fire wind water air the nations lived in harmony before the
+        fire nation attacked
+    </p>
 
-  <section id="credits">
-    <h2 style="text-align: center">Credits</h2>
-    <ol style="text-align: left;">
-      <li>Sprites: <a href="https://www.dragonflycave.com/resources/sprite-generator/">Dragonfly Cave</a></li>
-      <li>Pallet Town Image: <a href="https://bulbapedia.bulbagarden.net/wiki/Main_Page">Bulab</a></li>
-    </ol>
-  </section>
+    <!--Elements can have multiple attributes, but only 1 tag-->
+    
+    <!--ELEMENTS are made up of tags (mandatory), attribute (optional), content (what is in the element)-->
 
-  <h3 style="color: white; text-align: center; font-family: monospace;">COPYRIGHT: pokemon is owned by gamefreak and this page is created as a fanwork</h3>
+    <div style="background-color: black; color: white; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif" class="ships-scifi">
+
+        <p id="lorem-ipsum" style="color: red;">Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange
+        new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before. Many say exploration
+        is part of our destiny, but it’s actually our duty to future generations and their quest to ensure the survival of the
+        human species.</p>
+
+        <h2> Ships That Are Cool</h2>
+        <ul>
+            <li id="han-solo">Millennium Falcon</li>
+            <li id="joker">SSV Normandy</li>
+            <li id="cortana">Forward Unto Dawn</li>
+            <li id="roland">UNSC Infinity </li>
+        </ul>
+
+    </div>
+
+  
 </body>
+
 </html>
