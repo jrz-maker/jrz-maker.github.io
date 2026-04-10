@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jurassic Park — Dinosaur Dossiers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="sticky-nav">
+    <div class="nav-buttons">
+      <button class="nav-btn active" data-filter="all">All Species</button>
+      <button class="nav-btn" data-filter="theropod">Theropods</button>
+      <button class="nav-btn" data-filter="sauropod">Sauropods</button>
+      <button class="nav-btn" data-filter="ceratopsian">Ceratopsians</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>Jurassic Park</h1>
+    <p>Classified enclosure files for dinosaur species on Isla Nublar.</p>
+  </section>
+
+  <main class="product-grid" id="productGrid">
+
+    <div class="card" data-category="theropod">
+      <div class="card-image">
+        <img src="./assets/trex.png" alt="T-Rex">
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Tyrannosaurus Rex</h3>
+        <p class="card-desc">Apex predator. 12m long with 12,800 PSI bite force.</p>
+        <button class="card-btn" onclick="openDossier('T-Rex')">View Dossier</button>
+      </div>
+    </div>
+
+    <div class="card" data-category="ceratopsian">
+      <div class="card-image">
+        <img src="./assets/triceratops.png" alt="Triceratops">
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Triceratops</h3>
+        <p class="card-desc">Herbivore but territorial during mating season.</p>
+        <button class="card-btn" onclick="openDossier('Triceratops')">View Dossier</button>
+      </div>
+    </div>
+
+    <div class="card" data-category="theropod">
+      <div class="card-image">
+        <img src="./assets/raptor.png" alt="Velociraptor">
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Velociraptor</h3>
+        <p class="card-desc">Intelligent pack hunter that coordinates attacks.</p>
+        <button class="card-btn" onclick="openDossier('Velociraptor')">View Dossier</button>
+      </div>
+    </div>
+
+    <div class="card" data-category="sauropod">
+      <div class="card-image">
+        <img src="./assets/brachiosaurus.png" alt="Brachiosaurus">
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Brachiosaurus</h3>
+        <p class="card-desc">Largest specimen at 26m. Docile but watch your step.</p>
+        <button class="card-btn" onclick="openDossier('Brachiosaurus')">View Dossier</button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>&copy; InGen Corporation · Isla Nublar</p>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
