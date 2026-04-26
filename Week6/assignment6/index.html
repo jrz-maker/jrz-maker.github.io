@@ -1,0 +1,88 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jurassic Park</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Jurassic Park</h1>
+    <p>Control Room Interface</p>
+  </header>
+
+  <div id="greeting">
+    <span class="icon" id="greetIcon">🌅</span>
+    <span id="greetText">Loading...</span>
+  </div>
+
+  <section class="alarm-section">
+    <button id="alarmBtn">Activate Alarm</button>
+    <p id="alarmMsg"></p>
+  </section>
+
+  <section>
+    <div class="dino-grid">
+      <div class="dino-card">
+        <span class="emoji">🦖</span>
+        <h3>T-Rex</h3>
+        <p>Paddock 1 — Secure</p>
+      </div>
+      <div class="dino-card">
+        <span class="emoji">🦕</span>
+        <h3>Brachiosaurus</h3>
+        <p>Paddock 3 — Secure</p>
+      </div>
+      <div class="dino-card">
+        <span class="emoji">🦎</span>
+        <h3>Velociraptor</h3>
+        <p>Paddock 5 — Caution</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu-section">
+    <button id="menuBtn">Park Systems Menu</button>
+    <ul id="hiddenMenu">
+      <li>Security Grid</li>
+      <li>Genetics Lab</li>
+      <li>Enclosure Map</li>
+      <li>Visitor Center</li>
+      <li>Emergency Protocol</li>
+    </ul>
+  </section>
+
+  <section class="input-section">
+    <input type="text" id="dinoInput" placeholder="Scan dinosaur ID...">
+    <p id="focusHint">Enter a dinosaur tracking ID (e.g. TRX-0042)</p>
+  </section>
+
+  <section class="todo-section">
+    <h2>Task Checklist</h2>
+    <ul id="todoList">
+      <li>
+        <div class="todo-check" onclick="toggleTodo(this)">✓</div>
+        <span>Check paddock 1 fence voltage</span>
+        <button class="todo-del" onclick="deleteTodo(this)">✕</button>
+      </li>
+      <li>
+        <div class="todo-check" onclick="toggleTodo(this)">✓</div>
+        <span>Feed Brachiosaurus</span>
+        <button class="todo-del" onclick="deleteTodo(this)">✕</button>
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    InGen Technologies &copy; 1993 — Jurassic Park Control System
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
