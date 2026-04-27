@@ -1,0 +1,156 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Weather</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Weekly weather near you</h1>
+  <div id="status">Requesting location...</div>
+  <div class="location-info" id="locationInfo" style="display:none;">
+    <i class="fa-solid fa-location-dot"></i>
+    <span id="locationText"></span>
+  </div>
+  <div id="weather" class="cards"></div>
+  <p class="hint">
+    Powered by Open-Meteo (no API key required).
+    Geolocation works best over HTTPS or localhost.
+  </p>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var statusEl  = document.getElementById("status");
+      var locInfo   = document.getElementById("locationInfo");
+      var locText   = document.getElementById("locationText");
+      var weatherEl = document.getElementById("weather");
+
+      function fmtDate(iso) {
+        var d = new Date(iso + "T00:00:00");
+        var w = d.toLocaleDateString("en-US", { weekday: "short" });
+        var m = String(d.getMonth() + 1).padStart(2, "0");
+        var dd = String(d.getDate()).padStart(2, "0");
+        return w + " " + m + "/" + dd;
+      }
+
+      function fmtTime(iso) {
+        return new Date(iso).toLocaleTimeString("en-US", {
+          hour: "2-digit", minute: "2-digit", hour12: true
+        });
+      }
+
+      function cToF(c) { return Math.round(c * 9 / 5 + 32); }
+
+      function todayISO() { return new Date().toLocaleDateString("en-CA"); }
+
+      function reverseGeocode(lat, lon) {
+        var url = "https://nominatim.openstreetmap.org/reverse" +
+          "?lat=" + lat + "&lon=" + lon +
+          "&format=json&zoom=10&accept-language=en";
+        return fetch(url, { headers: { "User-Agent": "WeatherDemo/1.0" } })
+          .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+          .then(function(data) {
+            var a = data.address || {};
+            var city = a.city || a.town || a.village || a.county || a.state || "Unknown";
+            var state = a.state || "";
+            var country = a.country || "";
+            var name = city;
+            if (state && state !== city) name += ", " + state;
+            if (country && country !== state) name += ", " + country;
+            return name;
+          })
+          .catch(function() { return null; });
+      }
+
+      if (!navigator.geolocation) {
+        statusEl.textContent = "Geolocation is not supported in this browser.";
+        return;
+      }
+
+      statusEl.textContent = "Requesting location...";
+
+      navigator.geolocation.getCurrentPosition(
+        function(pos) {
+          var lat = pos.coords.latitude;
+          var lon = pos.coords.longitude;
+          statusEl.textContent = "Lat " + lat.toFixed(3) + ", Lon " + lon.toFixed(3) + " — fetching weather…";
+
+          var url =
+            "https://api.open-meteo.com/v1/forecast" +
+            "?latitude=" + lat +
+            "&longitude=" + lon +
+            "&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset" +
+            "&timezone=auto" +
+            "&forecast_days=7";
+
+          fetch(url)
+            .then(function(r) {
+              if (!r.ok) throw new Error("HTTP " + r.status);
+              return r.json();
+            })
+            .then(function(data) {
+              var times = data.daily.time;
+              var hi = data.daily.temperature_2m_max;
+              var lo = data.daily.temperature_2m_min;
+              var sr = data.daily.sunrise;
+              var ss = data.daily.sunset;
+
+              var today = todayISO();
+              weatherEl.innerHTML = "";
+
+              for (var i = 0; i < times.length; i++) {
+                var card = document.createElement("div");
+                card.className = "card";
+                if (times[i] === today) card.classList.add("today");
+
+                var dayLabel = (times[i] === today) ? "Today" : fmtDate(times[i]);
+
+                card.innerHTML =
+                  '<div class="card-header">' +
+                    '<span class="day-name">' + dayLabel + '</span>' +
+                    '<span class="date">' + times[i] + '</span>' +
+                  '</div>' +
+                  '<div class="sunrise-sunset">' +
+                    '<div>Sunrise ' + fmtTime(sr[i]) + '</div>' +
+                    '<div>Sunset ' + fmtTime(ss[i]) + '</div>' +
+                  '</div>' +
+                  '<div class="highs-lows">' +
+                    '<div><span class="hi">High ' + Math.round(hi[i]) + '°C</span><span class="temp-f">' + cToF(hi[i]) + '°F</span></div>' +
+                    '<div><span class="lo">Low ' + Math.round(lo[i]) + '°C</span><span class="temp-f">' + cToF(lo[i]) + '°F</span></div>' +
+                  '</div>';
+
+                weatherEl.appendChild(card);
+              }
+
+              statusEl.textContent = "Lat " + lat.toFixed(3) + ", Lon " + lon.toFixed(3);
+
+              reverseGeocode(lat, lon).then(function(name) {
+                if (name) {
+                  locText.textContent = name;
+                  locInfo.style.display = "flex";
+                }
+              });
+            })
+            .catch(function(err) {
+              console.error(err);
+              statusEl.textContent = "Failed to fetch weather: " + err.message;
+            });
+        },
+        function(err) {
+          var msgs = {
+            1: "Location permission denied. Please allow it and reload.",
+            2: "Position unavailable. Check your device's location services.",
+            3: "Location request timed out. Try again."
+          };
+          statusEl.textContent = msgs[err.code] || "Location error (" + err.code + ").";
+        },
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+      );
+    });
+  </script>
+</body>
+</html>
